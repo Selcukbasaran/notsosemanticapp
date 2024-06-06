@@ -1,0 +1,30 @@
+<description xmlns="http://www.w3.org/ns/sawsdl"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             targetNamespace="http://www.example.org/WeatherService">
+
+    <interface name="WeatherInterface">
+        <operation name="getWeather">
+            <inputElement>
+                <element name="Coordinates">
+                    <complexType>
+                        <sequence>
+                            <element name="latitude" type="xsd:double" sawsdl:modelReference="http://www.example.org/geo#Latitude"/>
+                            <element name="longitude" type="xsd:double" sawsdl:modelReference="http://www.example.org/geo#Longitude"/>
+                        </sequence>
+                    </complexType>
+                </element>
+            </inputElement>
+            <outputElement>
+                <element name="WeatherCondition">
+                    <complexType>
+                        <sequence>
+                            <element name="temperature" type="xsd:double" sawsdl:modelReference="http://www.example.org/weather#Temperature"/>
+                            <element name="condition" type="xsd:string" sawsdl:modelReference="http://www.example.org/weather#Condition"/>
+                        </sequence>
+                    </complexType>
+                </element>
+            </outputElement>
+        </operation>
+    </interface>
+
+</description>

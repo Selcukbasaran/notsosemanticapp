@@ -1,0 +1,23 @@
+<description xmlns="http://www.w3.org/ns/sawsdl"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             targetNamespace="http://www.example.org/CityToCoordinatesService">
+
+    <interface name="GeoLocationInterface">
+        <operation name="getCoordinates">
+            <inputElement>
+                <element name="cityName" type="xsd:string" sawsdl:modelReference="http://www.example.org/geo#CityName"/>
+            </inputElement>
+            <outputElement>
+                <element name="Coordinates">
+                    <complexType>
+                        <sequence>
+                            <element name="latitude" type="xsd:double" sawsdl:modelReference="http://www.example.org/geo#Latitude"/>
+                            <element name="longitude" type="xsd:double" sawsdl:modelReference="http://www.example.org/geo#Longitude"/>
+                        </sequence>
+                    </complexType>
+                </element>
+            </outputElement>
+        </operation>
+    </interface>
+
+</description>
