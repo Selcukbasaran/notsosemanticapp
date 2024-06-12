@@ -1,0 +1,63 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:sawsdl="http://www.w3.org/ns/sawsdl"
+             xmlns:tns="http://www.example.org/CoordinatesToWeatherService"
+             targetNamespace="http://www.example.org/CoordinatesToWeatherService">
+
+    <types sawsdl:modelReference="http://www.example.org/weather#WeatherRequest">
+        <xsd:schema targetNamespace="http://www.example.org/CoordinatesToWeatherService">
+            <xsd:element name="GetWeatherRequest" sawsdl:modelReference="http://www.example.org/geolocation#Coordinates">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="latitude" type="xsd:double" sawsdl:modelReference="http://www.example.org/geolocation#latitude"/>
+                        <xsd:element name="longitude" type="xsd:double" sawsdl:modelReference="http://www.example.org/geolocation#longitude"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetWeatherResponse" sawsdl:modelReference="http://www.example.org/weather#WeatherCondition">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="temperature" type="xsd:double" sawsdl:modelReference="http://www.example.org/weather#temperature"/>
+                        <xsd:element name="condition" type="xsd:string" sawsdl:modelReference="http://www.example.org/weather#condition"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+
+    <message name="GetWeatherRequest">
+        <part name="parameters" element="tns:GetWeatherRequest"/>
+    </message>
+    <message name="GetWeatherResponse">
+        <part name="parameters" element="tns:GetWeatherResponse"/>
+    </message>
+
+    <portType name="CoordinatesToWeatherPortType">
+        <operation name="GetWeather">
+            <input message="tns:GetWeatherRequest"/>
+            <output message="tns:GetWeatherResponse"/>
+        </operation>
+    </portType>
+
+    <binding name="CoordinatesToWeatherBinding" type="tns:CoordinatesToWeatherPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="GetWeather">
+            <soap:operation soapAction="http://www.example.org/CoordinatesToWeatherService/GetWeather"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <service name="CoordinatesToWeatherService">
+        <documentation>Service to get weather information for given coordinates</documentation>
+        <port name="CoordinatesToWeatherPort" binding="tns:CoordinatesToWeatherBinding">
+            <soap:address location="http://localhost:8081/CoordinatesToWeatherService"/>
+        </port>
+    </service>
+</definitions>

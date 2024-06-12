@@ -1,0 +1,62 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:sawsdl="http://www.w3.org/ns/sawsdl"
+             xmlns:tns="http://www.example.org/CityToCoordinatesService"
+             targetNamespace="http://www.example.org/CityToCoordinatesService">
+
+    <types sawsdl:modelReference="http://www.example.org/geolocation#City">
+        <xsd:schema targetNamespace="http://www.example.org/CityToCoordinatesService">
+            <xsd:element name="GetCoordinatesRequest" sawsdl:modelReference="http://www.example.org/geolocation#CityName">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="cityName" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetCoordinatesResponse" sawsdl:modelReference="http://www.example.org/geolocation#Coordinates">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="latitude" type="xsd:double" sawsdl:modelReference="http://www.example.org/geolocation#latitude"/>
+                        <xsd:element name="longitude" type="xsd:double" sawsdl:modelReference="http://www.example.org/geolocation#longitude"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+
+    <message name="GetCoordinatesRequest">
+        <part name="parameters" element="tns:GetCoordinatesRequest"/>
+    </message>
+    <message name="GetCoordinatesResponse">
+        <part name="parameters" element="tns:GetCoordinatesResponse"/>
+    </message>
+
+    <portType name="CityToCoordinatesPortType">
+        <operation name="GetCoordinates">
+            <input message="tns:GetCoordinatesRequest"/>
+            <output message="tns:GetCoordinatesResponse"/>
+        </operation>
+    </portType>
+
+    <binding name="CityToCoordinatesBinding" type="tns:CityToCoordinatesPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="GetCoordinates">
+            <soap:operation soapAction="http://www.example.org/CityToCoordinatesService/GetCoordinates"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <service name="CityToCoordinatesService">
+        <documentation>Service to get coordinates for a given city name</documentation>
+        <port name="CityToCoordinatesPort" binding="tns:CityToCoordinatesBinding">
+            <soap:address location="http://localhost:8080/CityToCoordinatesService"/>
+        </port>
+    </service>
+</definitions>
