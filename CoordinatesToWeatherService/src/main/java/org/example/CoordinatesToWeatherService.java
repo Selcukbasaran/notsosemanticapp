@@ -1,18 +1,20 @@
 package org.example;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 public class CoordinatesToWeatherService {
 
-    private static final String API_KEY = "0a04cb04506fe62a19e1b76bab62d198";
+    private static final String OPENWEATHER_API_KEY = "0a04cb04506fe62a19e1b76bab62d198"; // Replace with your actual API key
 
-    public static Weather getWeather(double latitude, double longitude) throws Exception {
-        String urlString = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&units=metric&appid=" + API_KEY;
+    public WeatherInfo getWeather(double latitude, double longitude) throws Exception {
+        String urlString = String.format("https://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&appid=%s&units=metric",
+                latitude, longitude, OPENWEATHER_API_KEY);
         URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
@@ -27,17 +29,17 @@ public class CoordinatesToWeatherService {
         in.close();
 
         JsonObject jsonObject = JsonParser.parseString(response.toString()).getAsJsonObject();
-        double temperature = jsonObject.getAsJsonObject("main").get("temp").getAsDouble();
+        JsonObject main = jsonObject.getAsJsonObject("main");
+        double temperature = main.get("temp").getAsDouble();
         String condition = jsonObject.getAsJsonArray("weather").get(0).getAsJsonObject().get("description").getAsString();
-
-        return new Weather(temperature, condition);
+        return new WeatherInfo(temperature, condition);
     }
 
-    public static class Weather {
+    public static class WeatherInfo {
         private double temperature;
         private String condition;
 
-        public Weather(double temperature, String condition) {
+        public WeatherInfo(double temperature, String condition) {
             this.temperature = temperature;
             this.condition = condition;
         }

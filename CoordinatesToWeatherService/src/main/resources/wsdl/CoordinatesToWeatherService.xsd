@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://localhost/CoordinatesToWeatherService"
+           xmlns:tns="http://localhost/CoordinatesToWeatherService"
+           elementFormDefault="qualified">
+
+    <xs:element name="GetWeatherRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="latitude" type="xs:double"/>
+                <xs:element name="longitude" type="xs:double"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetWeatherResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="temperature" type="xs:double"/>
+                <xs:element name="condition" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

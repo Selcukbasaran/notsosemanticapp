@@ -2,27 +2,13 @@
              xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
              xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-             xmlns:tns="http://www.example.org/CoordinatesToWeatherService"
-             targetNamespace="http://www.example.org/CoordinatesToWeatherService">
+             xmlns:tns="http://localhost/CoordinatesToWeatherService"
+             targetNamespace="http://localhost/CoordinatesToWeatherService">
 
     <types>
-        <xsd:schema targetNamespace="http://www.example.org/CoordinatesToWeatherService">
-            <xsd:element name="GetWeatherRequest">
-                <xsd:complexType>
-                    <xsd:sequence>
-                        <xsd:element name="latitude" type="xsd:double"/>
-                        <xsd:element name="longitude" type="xsd:double"/>
-                    </xsd:sequence>
-                </xsd:complexType>
-            </xsd:element>
-            <xsd:element name="GetWeatherResponse">
-                <xsd:complexType>
-                    <xsd:sequence>
-                        <xsd:element name="temperature" type="xsd:double"/>
-                        <xsd:element name="condition" type="xsd:string"/>
-                    </xsd:sequence>
-                </xsd:complexType>
-            </xsd:element>
+        <xsd:schema>
+            <xsd:import namespace="http://localhost/CoordinatesToWeatherService"
+                        schemaLocation="CoordinatesToWeatherService.xsd"/>
         </xsd:schema>
     </types>
 
@@ -43,7 +29,7 @@
     <binding name="CoordinatesToWeatherBinding" type="tns:CoordinatesToWeatherPortType">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
         <operation name="GetWeather">
-            <soap:operation soapAction="http://www.example.org/CoordinatesToWeatherService/GetWeather"/>
+            <soap:operation soapAction="http://localhost/CoordinatesToWeatherService/GetWeather"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -54,9 +40,8 @@
     </binding>
 
     <service name="CoordinatesToWeatherService">
-        <documentation>Service to get weather information for given coordinates</documentation>
         <port name="CoordinatesToWeatherPort" binding="tns:CoordinatesToWeatherBinding">
-            <soap:address location="http://localhost:8081/CoordinatesToWeatherService"/>
+            <soap:address location="http://localhost:8081/ws"/>
         </port>
     </service>
 </definitions>

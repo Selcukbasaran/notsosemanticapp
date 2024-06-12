@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://localhost/CityToCoordinatesService"
+           xmlns:tns="http://localhost/CityToCoordinatesService"
+           elementFormDefault="qualified">
+
+    <xs:element name="GetCoordinatesRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="cityName" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetCoordinatesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="latitude" type="xs:double"/>
+                <xs:element name="longitude" type="xs:double"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

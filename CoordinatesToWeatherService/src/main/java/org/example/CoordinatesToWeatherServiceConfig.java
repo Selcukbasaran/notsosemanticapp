@@ -10,20 +10,20 @@ import org.springframework.xml.xsd.XsdSchema;
 
 @Configuration
 @EnableWs
-public class CityToCoordinatesServiceConfig extends WsConfigurerAdapter {
+public class CoordinatesToWeatherServiceConfig extends WsConfigurerAdapter {
 
-    @Bean(name = "cityToCoordinates")
-    public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema cityToCoordinatesSchema) {
+    @Bean(name = "coordinatesToWeather")
+    public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema coordinatesToWeatherSchema) {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
-        wsdl11Definition.setPortTypeName("CityToCoordinatesPort");
+        wsdl11Definition.setPortTypeName("CoordinatesToWeatherPort");
         wsdl11Definition.setLocationUri("/ws");
-        wsdl11Definition.setTargetNamespace("http://localhost/CityToCoordinatesService");
-        wsdl11Definition.setSchema(cityToCoordinatesSchema);
+        wsdl11Definition.setTargetNamespace("http://www.example.org/CoordinatesToWeatherService");
+        wsdl11Definition.setSchema(coordinatesToWeatherSchema);
         return wsdl11Definition;
     }
 
     @Bean
-    public XsdSchema cityToCoordinatesSchema() {
-        return new SimpleXsdSchema(new org.springframework.core.io.ClassPathResource("wsdl/CityToCoordinatesService.xsd"));
+    public XsdSchema coordinatesToWeatherSchema() {
+        return new SimpleXsdSchema(new org.springframework.core.io.ClassPathResource("wsdl/CoordinatesToWeatherService.xsd"));
     }
 }
